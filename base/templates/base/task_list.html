@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+       <script src="{% static 'js/main.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'css/main.css' %}" type="text/css" />
+</head>
+<body>
+<h1>TODO LISTS</h1><br>
+<hr>
+{%  if request.user.is_authenticated  %}
+<p>{{request.user}}</p>
+<a href="{% url 'logout' %}">Logout</a>
+
+{%  else  %}
+<a href="{% url 'login' %}">Login</a>
+{%  endif  %}
+
+<p>
+<hr>
+<form method="GET" action="">
+    <input type="text"  name="search-area" value="{{search_input}}">
+
+    <input type="submit" value="Search">
+
+</form>
+
+
+
+
+
+
+
+<h3><a href="{% url 'task-create'  %}">Create Tasks</a></h3>
+<ul>
+    {% for task in task %}
+    <li>{{task.title}}</li><hr>python manage.py runserver
+    <a href="{% url 'task' task.id %}">View</a>
+    <a href="{% url 'task-update' task.id %}">edit</a>
+    <a href="{% url 'task-delete' task.id %}">Delete</a>
+
+
+     {% empty %}
+    <p>This list is empty</p>
+
+
+     {% endfor   %}
+</ul>
+</body>
+</html>
